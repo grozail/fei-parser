@@ -32,6 +32,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ClosedXML, Version=0.87.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <HintPath>packages\ClosedXML.0.87.1\lib\net40\ClosedXML.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,6 +58,36 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Parser\Core\FreestyleParser.cs" />
+    <Compile Include="Parser\Core\UsualParser.cs" />
+    <Compile Include="Parser\Core\Util\NotYoungParser.cs" />
+    <Compile Include="Parser\Core\Util\Parser.cs" />
+    <Compile Include="Parser\Core\YoungParser.cs" />
+    <Compile Include="Parser\Globals.cs" />
+    <Compile Include="Parser\Model\Event\Competition.cs" />
+    <Compile Include="Parser\Model\Event\FreestyleParticipation.cs" />
+    <Compile Include="Parser\Model\Event\Participation.cs" />
+    <Compile Include="Parser\Model\Event\UsualParticipation.cs" />
+    <Compile Include="Parser\Model\Event\YoungParticipation.cs" />
+    <Compile Include="Parser\Model\Living\Athlete.cs" />
+    <Compile Include="Parser\Model\Living\Horse.cs" />
+    <Compile Include="Parser\Model\Living\Judge.cs" />
+    <Compile Include="Parser\Model\Event\Properties\Complement.cs" />
+    <Compile Include="Parser\Model\Event\Properties\Position.cs" />
+    <Compile Include="Parser\Model\Event\Properties\PrizeMoney.cs" />
+    <Compile Include="Parser\Model\Mark\Container\ArtisticMark.cs" />
+    <Compile Include="Parser\Model\Mark\Container\Assessment.cs" />
+    <Compile Include="Parser\Model\Mark\Container\CollectiveMark.cs" />
+    <Compile Include="Parser\Model\Mark\Container\Exercise.cs" />
+    <Compile Include="Parser\Model\Mark\Mark.cs" />
+    <Compile Include="Parser\Model\Mark\Container\TechnicalMark.cs" />
+    <Compile Include="Parser\Model\Mark\Container\MarkContainer.cs" />
+    <Compile Include="Parser\Model\Mark\Result\ArtisticResult.cs" />
+    <Compile Include="Parser\Model\Mark\Result\FreestyleResult.cs" />
+    <Compile Include="Parser\Model\Mark\Result\TechnicalResult.cs" />
+    <Compile Include="Parser\Model\Mark\Result\UsualResult.cs" />
+    <Compile Include="Parser\Model\Mark\Total.cs" />
+    <Compile Include="Parser\Model\XMLConvertable.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -61,6 +99,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -71,6 +110,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
