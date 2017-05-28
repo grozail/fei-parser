@@ -1,7 +1,14 @@
-﻿using System;
+﻿using ClosedXML.Excel;
+using HorseSport.Parser.Core.Util;
+using HorseSport.Parser.Model.Event;
+using HorseSport.Parser.Model.Mark;
+using HorseSport.Parser.Model.Mark.Container;
+using HorseSport.Parser.Model.Mark.Result;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 
 namespace HorseSport.Parser.Core {
 	abstract class FreestyleParser : NotYoungParser {

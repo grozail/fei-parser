@@ -61,7 +61,7 @@
     <Compile Include="Parser\Core\FreestyleParser.cs" />
     <Compile Include="Parser\Core\UsualParser.cs" />
     <Compile Include="Parser\Core\Util\NotYoungParser.cs" />
-    <Compile Include="Parser\Core\Util\Parser.cs" />
+    <Compile Include="Parser\Core\Util\AbstractParser.cs" />
     <Compile Include="Parser\Core\YoungParser.cs" />
     <Compile Include="Parser\Globals.cs" />
     <Compile Include="Parser\Model\Event\Competition.cs" />
