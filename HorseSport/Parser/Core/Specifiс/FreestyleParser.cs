@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 
-namespace HorseSport.Parser.Core {
+namespace HorseSport.Parser.Core.Specific {
 	abstract class FreestyleParser : NotYoungParser {
 		public static Competition Parse(XLWorkbook workbook) {
 			var competition = new Competition();

@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\CompetitionManager.cs" />
     <Compile Include="Data\JudgeManager.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -63,11 +64,12 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Parser\Core\FreestyleParser.cs" />
-    <Compile Include="Parser\Core\UsualParser.cs" />
+    <Compile Include="Parser\Core\Specifiс\FreestyleParser.cs" />
+    <Compile Include="Parser\Core\GeneralParser.cs" />
+    <Compile Include="Parser\Core\Specifiс\UsualParser.cs" />
     <Compile Include="Parser\Core\Util\NotYoungParser.cs" />
     <Compile Include="Parser\Core\Util\AbstractParser.cs" />
-    <Compile Include="Parser\Core\YoungParser.cs" />
+    <Compile Include="Parser\Core\Specifiс\YoungParser.cs" />
     <Compile Include="Parser\Globals.cs" />
     <Compile Include="Parser\Model\Event\Competition.cs" />
     <Compile Include="Parser\Model\Event\FreestyleParticipation.cs" />
