@@ -89,5 +89,9 @@ namespace HorseSport.Parser.Model.Living {
 		public XElement ToXML() {
 			throw new NotImplementedException();
 		}
+
+		public object[] AsDataView() {
+			return new object[]{ FEIID, FamilyName, FirstName, NF, OfficialStatus, "-1", false};
+		}
 	}
 }
