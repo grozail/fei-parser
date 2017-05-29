@@ -12,7 +12,7 @@ using System.Xml.Linq;
 
 namespace HorseSport.Parser.Core {
 	abstract class FreestyleParser : NotYoungParser {
-		public static XElement Parse(XLWorkbook workbook) {
+		public static Competition Parse(XLWorkbook workbook) {
 			var competition = new Competition();
 			ExtractStartInfo<FreestyleParticipation>(workbook.Worksheet("Start List (2)"));
 			ExtractResultsInfo(workbook.Worksheet("Results (2)"));
@@ -27,7 +27,7 @@ namespace HorseSport.Parser.Core {
 					return 1;
 			});
 			participationList.ForEach(k => competition.Participations.Add(k.Value));
-			return competition.ToXML();
+			return competition;
 		}
 
 		private static void TryExtractMarks(XLWorkbook workbook) {

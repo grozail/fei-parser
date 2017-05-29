@@ -36,5 +36,13 @@ namespace HorseSport {
 				currencyTextBox.Visible = false;
 			}
 		}
+
+		private void openToolStripMenuItem_Click(object sender, EventArgs e) {
+
+		}
+
+		private void descriptionNodeMakeButton_Click(object sender, EventArgs e) {
+
+		}
 	}
 }

@@ -23,7 +23,7 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.judgeView = new System.Windows.Forms.DataGridView();
 			this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -36,22 +36,28 @@
 			this.juryNodeMakeButton = new System.Windows.Forms.Button();
 			this.usePrizesCheckBox = new System.Windows.Forms.CheckBox();
 			this.currencyTextBox = new System.Windows.Forms.TextBox();
-			this.menuStrip1.SuspendLayout();
+			this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+			this.descriptionNodeMakeButton = new System.Windows.Forms.Button();
+			this.descriptionClearButton = new System.Windows.Forms.Button();
+			this.menuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.judgeView)).BeginInit();
 			this.SuspendLayout();
 			// 
-			// menuStrip1
+			// menuStrip
 			// 
-			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem});
-			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(1183, 24);
-			this.menuStrip1.TabIndex = 1;
-			this.menuStrip1.Text = "menuStrip1";
+			this.menuStrip.Location = new System.Drawing.Point(0, 0);
+			this.menuStrip.Name = "menuStrip";
+			this.menuStrip.Size = new System.Drawing.Size(1183, 24);
+			this.menuStrip.TabIndex = 1;
+			this.menuStrip.Text = "menuStrip1";
 			// 
 			// fileToolStripMenuItem
 			// 
+			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
 			this.fileToolStripMenuItem.Text = "File";
@@ -123,7 +129,7 @@
 			// 
 			this.juryNodeMakeButton.Location = new System.Drawing.Point(12, 215);
 			this.juryNodeMakeButton.Name = "juryNodeMakeButton";
-			this.juryNodeMakeButton.Size = new System.Drawing.Size(526, 23);
+			this.juryNodeMakeButton.Size = new System.Drawing.Size(238, 23);
 			this.juryNodeMakeButton.TabIndex = 3;
 			this.juryNodeMakeButton.Text = "Make Jury";
 			this.juryNodeMakeButton.UseVisualStyleBackColor = true;
@@ -132,7 +138,7 @@
 			// usePrizesCheckBox
 			// 
 			this.usePrizesCheckBox.AutoSize = true;
-			this.usePrizesCheckBox.Location = new System.Drawing.Point(547, 218);
+			this.usePrizesCheckBox.Location = new System.Drawing.Point(264, 217);
 			this.usePrizesCheckBox.Name = "usePrizesCheckBox";
 			this.usePrizesCheckBox.Size = new System.Drawing.Size(76, 17);
 			this.usePrizesCheckBox.TabIndex = 4;
@@ -142,28 +148,60 @@
 			// 
 			// currencyTextBox
 			// 
-			this.currencyTextBox.Location = new System.Drawing.Point(630, 218);
+			this.currencyTextBox.Location = new System.Drawing.Point(347, 217);
 			this.currencyTextBox.Name = "currencyTextBox";
 			this.currencyTextBox.Size = new System.Drawing.Size(100, 20);
 			this.currencyTextBox.TabIndex = 5;
 			this.currencyTextBox.Visible = false;
+			// 
+			// openToolStripMenuItem
+			// 
+			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+			this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.openToolStripMenuItem.Text = "Open";
+			this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+			// 
+			// openFileDialog
+			// 
+			this.openFileDialog.FileName = "openFileDialog1";
+			// 
+			// descriptionNodeMakeButton
+			// 
+			this.descriptionNodeMakeButton.Location = new System.Drawing.Point(464, 215);
+			this.descriptionNodeMakeButton.Name = "descriptionNodeMakeButton";
+			this.descriptionNodeMakeButton.Size = new System.Drawing.Size(126, 23);
+			this.descriptionNodeMakeButton.TabIndex = 6;
+			this.descriptionNodeMakeButton.Text = "Make Description";
+			this.descriptionNodeMakeButton.UseVisualStyleBackColor = true;
+			this.descriptionNodeMakeButton.Click += new System.EventHandler(this.descriptionNodeMakeButton_Click);
+			// 
+			// descriptionClearButton
+			// 
+			this.descriptionClearButton.Location = new System.Drawing.Point(608, 215);
+			this.descriptionClearButton.Name = "descriptionClearButton";
+			this.descriptionClearButton.Size = new System.Drawing.Size(122, 23);
+			this.descriptionClearButton.TabIndex = 7;
+			this.descriptionClearButton.Text = "Clear Description";
+			this.descriptionClearButton.UseVisualStyleBackColor = true;
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1183, 535);
+			this.Controls.Add(this.descriptionClearButton);
+			this.Controls.Add(this.descriptionNodeMakeButton);
 			this.Controls.Add(this.currencyTextBox);
 			this.Controls.Add(this.usePrizesCheckBox);
 			this.Controls.Add(this.juryNodeMakeButton);
 			this.Controls.Add(this.judgeView);
-			this.Controls.Add(this.menuStrip1);
-			this.MainMenuStrip = this.menuStrip1;
+			this.Controls.Add(this.menuStrip);
+			this.MainMenuStrip = this.menuStrip;
 			this.Name = "MainForm";
 			this.Text = "Horse sport excel parser (by grozail)";
 			this.Load += new System.EventHandler(this.MainForm_Load);
-			this.menuStrip1.ResumeLayout(false);
-			this.menuStrip1.PerformLayout();
+			this.menuStrip.ResumeLayout(false);
+			this.menuStrip.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.judgeView)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -171,7 +209,7 @@
 		}
 
 		#endregion
-		private System.Windows.Forms.MenuStrip menuStrip1;
+		private System.Windows.Forms.MenuStrip menuStrip;
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
 		private System.Windows.Forms.DataGridView judgeView;
 		private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
@@ -184,6 +222,10 @@
 		private System.Windows.Forms.Button juryNodeMakeButton;
 		private System.Windows.Forms.CheckBox usePrizesCheckBox;
 		private System.Windows.Forms.TextBox currencyTextBox;
+		private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+		private System.Windows.Forms.OpenFileDialog openFileDialog;
+		private System.Windows.Forms.Button descriptionNodeMakeButton;
+		private System.Windows.Forms.Button descriptionClearButton;
 	}
 }
 
