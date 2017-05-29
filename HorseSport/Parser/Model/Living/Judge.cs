@@ -93,5 +93,13 @@ namespace HorseSport.Parser.Model.Living {
 		public object[] AsDataView() {
 			return new object[]{ FEIID, FamilyName, FirstName, NF, OfficialStatus, "-1", false};
 		}
+
+		public static Judge Parse(string source) {
+			var data = source.Split(',', '\t');
+			if(data.Length == 5) {
+				return new Judge(data[0], data[3], data[2], data[1], data[4], "-1");
+			}
+			throw new FormatException("Judge data length is not 5");
+		}
 	}
 }
