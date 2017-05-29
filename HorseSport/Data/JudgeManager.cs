@@ -38,12 +38,12 @@ namespace HorseSport.Data {
 									"-1"));
 					}
 					catch (Exception e) {
-						logger.Info(e, "EXCEPTION: occured in JudgeManager while reading data.|CAUSE: Nonunique or null FEIID");
+						logger.Info(e, "EXCEPTION: in JudgeManager while reading data.|CAUSE: Nonunique or null FEIID");
 					}	
 				}
 			}
 			catch (Exception e) {
-				logger.Info(e, "EXCEPTION: occured in JudgeManager while loading data");
+				logger.Info(e, "EXCEPTION: in JudgeManager while loading data");
 			}
 		}
 	}

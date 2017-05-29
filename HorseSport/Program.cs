@@ -14,10 +14,11 @@ namespace HorseSport {
 		/// </summary>
 		[STAThread]
 		static void Main() {
-			JudgeManager.LoadData();
+			logger.Info("SESSION STARTED");
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new MainForm());
+			logger.Info("SESSION ENDED");
 		}
 	}
 }

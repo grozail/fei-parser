@@ -72,6 +72,7 @@
     <Compile Include="Parser\Model\Event\Competition.cs" />
     <Compile Include="Parser\Model\Event\FreestyleParticipation.cs" />
     <Compile Include="Parser\Model\Event\Participation.cs" />
+    <Compile Include="Parser\Model\Event\Properties\Prizes.cs" />
     <Compile Include="Parser\Model\Event\UsualParticipation.cs" />
     <Compile Include="Parser\Model\Event\YoungParticipation.cs" />
     <Compile Include="Parser\Model\Living\Athlete.cs" />
