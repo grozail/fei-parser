@@ -1,4 +1,7 @@
-﻿namespace HorseSport {
+﻿using System.IO;
+using System.Windows.Forms;
+
+namespace HorseSport {
 	partial class MainForm {
 		/// <summary>
 		/// Required designer variable.
@@ -35,12 +38,10 @@
 			this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.Column7 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-			this.juryNodeMakeButton = new System.Windows.Forms.Button();
+			this.descriptionMakeButton = new System.Windows.Forms.Button();
 			this.usePrizesCheckBox = new System.Windows.Forms.CheckBox();
 			this.currencyTextBox = new System.Windows.Forms.TextBox();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-			this.descriptionNodeMakeButton = new System.Windows.Forms.Button();
-			this.descriptionClearButton = new System.Windows.Forms.Button();
 			this.statusStrip = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -144,15 +145,15 @@
 			this.Column7.HeaderText = "In charge";
 			this.Column7.Name = "Column7";
 			// 
-			// juryNodeMakeButton
+			// descriptionMakeButton
 			// 
-			this.juryNodeMakeButton.Location = new System.Drawing.Point(539, 215);
-			this.juryNodeMakeButton.Name = "juryNodeMakeButton";
-			this.juryNodeMakeButton.Size = new System.Drawing.Size(238, 23);
-			this.juryNodeMakeButton.TabIndex = 3;
-			this.juryNodeMakeButton.Text = "Make Jury";
-			this.juryNodeMakeButton.UseVisualStyleBackColor = true;
-			this.juryNodeMakeButton.Click += new System.EventHandler(this.juryNodeMakeButton_Click);
+			this.descriptionMakeButton.Location = new System.Drawing.Point(539, 215);
+			this.descriptionMakeButton.Name = "descriptionMakeButton";
+			this.descriptionMakeButton.Size = new System.Drawing.Size(238, 23);
+			this.descriptionMakeButton.TabIndex = 3;
+			this.descriptionMakeButton.Text = "Make Description";
+			this.descriptionMakeButton.UseVisualStyleBackColor = true;
+			this.descriptionMakeButton.Click += new System.EventHandler(this.descriptionMakeButton_Click);
 			// 
 			// usePrizesCheckBox
 			// 
@@ -175,26 +176,9 @@
 			// 
 			// openFileDialog
 			// 
-			this.openFileDialog.FileName = "openFileDialog1";
-			// 
-			// descriptionNodeMakeButton
-			// 
-			this.descriptionNodeMakeButton.Location = new System.Drawing.Point(991, 215);
-			this.descriptionNodeMakeButton.Name = "descriptionNodeMakeButton";
-			this.descriptionNodeMakeButton.Size = new System.Drawing.Size(126, 23);
-			this.descriptionNodeMakeButton.TabIndex = 6;
-			this.descriptionNodeMakeButton.Text = "Make Description";
-			this.descriptionNodeMakeButton.UseVisualStyleBackColor = true;
-			this.descriptionNodeMakeButton.Click += new System.EventHandler(this.descriptionNodeMakeButton_Click);
-			// 
-			// descriptionClearButton
-			// 
-			this.descriptionClearButton.Location = new System.Drawing.Point(1135, 214);
-			this.descriptionClearButton.Name = "descriptionClearButton";
-			this.descriptionClearButton.Size = new System.Drawing.Size(122, 23);
-			this.descriptionClearButton.TabIndex = 7;
-			this.descriptionClearButton.Text = "Clear Description";
-			this.descriptionClearButton.UseVisualStyleBackColor = true;
+			this.openFileDialog.FileName = "source";
+			this.openFileDialog.Filter = "Source files (*.csv, *.xlsx)|*.csv;*.xlsx";
+			this.openFileDialog.InitialDirectory = Path.Combine(Application.StartupPath, "sources");
 			// 
 			// statusStrip
 			// 
@@ -218,11 +202,9 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1269, 535);
 			this.Controls.Add(this.statusStrip);
-			this.Controls.Add(this.descriptionClearButton);
-			this.Controls.Add(this.descriptionNodeMakeButton);
 			this.Controls.Add(this.currencyTextBox);
 			this.Controls.Add(this.usePrizesCheckBox);
-			this.Controls.Add(this.juryNodeMakeButton);
+			this.Controls.Add(this.descriptionMakeButton);
 			this.Controls.Add(this.judgeView);
 			this.Controls.Add(this.menuStrip);
 			this.MainMenuStrip = this.menuStrip;
@@ -251,13 +233,11 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
 		private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn Column7;
-		private System.Windows.Forms.Button juryNodeMakeButton;
+		private System.Windows.Forms.Button descriptionMakeButton;
 		private System.Windows.Forms.CheckBox usePrizesCheckBox;
 		private System.Windows.Forms.TextBox currencyTextBox;
 		private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
 		private System.Windows.Forms.OpenFileDialog openFileDialog;
-		private System.Windows.Forms.Button descriptionNodeMakeButton;
-		private System.Windows.Forms.Button descriptionClearButton;
 		private System.Windows.Forms.StatusStrip statusStrip;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
 		private System.Windows.Forms.BindingSource bindingSource;
