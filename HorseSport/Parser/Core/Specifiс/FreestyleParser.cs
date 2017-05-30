@@ -10,10 +10,10 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 
-namespace HorseSport.Parser.Core {
+namespace HorseSport.Parser.Core.Specific {
 	abstract class FreestyleParser : NotYoungParser {
-		public static XElement Parse(XLWorkbook workbook) {
-			var competition = new Competition();
+		public static Competition Parse(XLWorkbook workbook, string fileName) {
+			var competition = new Competition(fileName);
 			ExtractStartInfo<FreestyleParticipation>(workbook.Worksheet("Start List (2)"));
 			ExtractResultsInfo(workbook.Worksheet("Results (2)"));
 			TryExtractMarks(workbook);
@@ -27,7 +27,7 @@ namespace HorseSport.Parser.Core {
 					return 1;
 			});
 			participationList.ForEach(k => competition.Participations.Add(k.Value));
-			return competition.ToXML();
+			return competition;
 		}
 
 		private static void TryExtractMarks(XLWorkbook workbook) {

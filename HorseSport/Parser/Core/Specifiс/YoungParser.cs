@@ -10,15 +10,15 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 
-namespace HorseSport.Parser.Core {
+namespace HorseSport.Parser.Core.Specific {
 	abstract class YoungParser : AbstractParser {
 
-		public static List<XElement> Parse(XLWorkbook workbook) {
+		public static List<Competition> Parse(XLWorkbook workbook, string fileName) {
 			// for all young competitions
-			var competitionElements = new List<XElement>();
+			var competitionList = new List<Competition>();
 			//select results sheet
 			foreach (var sheet in workbook.Worksheets.Where(x => x.Name.Contains("yo") && x.Name.Contains("(2)"))) {
-				var competition = new Competition();
+				var competition = new Competition(fileName + " " + sheet.Name);
 				//find rows with results
 				using (var rowPool = sheet.RowsUsed(r => r.Cell(PIVOT_COL).Value.GetType() == typeof(double) ||
 					r.Cell(PIVOT_COL).GetString().Trim(' ').ToUpper().Equals("EL") ||
@@ -36,10 +36,10 @@ namespace HorseSport.Parser.Core {
 						competition.Participations.Add(participation);
 						++currentPosition;
 					}
-					competitionElements.Add(competition.ToXML());
+					competitionList.Add(competition);
 				}
 			}
-			return competitionElements;
+			return competitionList;
 		}
 
 		private static string TOTAL_SCORE_COL = "P";
