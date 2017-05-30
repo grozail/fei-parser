@@ -12,8 +12,8 @@ using System.Xml.Linq;
 
 namespace HorseSport.Parser.Core.Specific {
 	abstract class FreestyleParser : NotYoungParser {
-		public static Competition Parse(XLWorkbook workbook) {
-			var competition = new Competition();
+		public static Competition Parse(XLWorkbook workbook, string fileName) {
+			var competition = new Competition(fileName);
 			ExtractStartInfo<FreestyleParticipation>(workbook.Worksheet("Start List (2)"));
 			ExtractResultsInfo(workbook.Worksheet("Results (2)"));
 			TryExtractMarks(workbook);

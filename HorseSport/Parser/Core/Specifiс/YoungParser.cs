@@ -13,12 +13,12 @@ using System.Xml.Linq;
 namespace HorseSport.Parser.Core.Specific {
 	abstract class YoungParser : AbstractParser {
 
-		public static List<Competition> Parse(XLWorkbook workbook) {
+		public static List<Competition> Parse(XLWorkbook workbook, string fileName) {
 			// for all young competitions
 			var competitionList = new List<Competition>();
 			//select results sheet
 			foreach (var sheet in workbook.Worksheets.Where(x => x.Name.Contains("yo") && x.Name.Contains("(2)"))) {
-				var competition = new Competition();
+				var competition = new Competition(fileName + " " + sheet.Name);
 				//find rows with results
 				using (var rowPool = sheet.RowsUsed(r => r.Cell(PIVOT_COL).Value.GetType() == typeof(double) ||
 					r.Cell(PIVOT_COL).GetString().Trim(' ').ToUpper().Equals("EL") ||

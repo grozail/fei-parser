@@ -6,8 +6,18 @@ using System.Xml.Linq;
 
 namespace HorseSport.Parser.Model.Event {
 	class Competition : XMLConvertable {
-
+		private string _sourceFileName;
 		private List<Participation> _participations;
+
+		public string SourceFileName {
+			get {
+				return _sourceFileName;
+			}
+
+			set {
+				_sourceFileName = value;
+			}
+		}
 
 		internal List<Participation> Participations {
 			get {
@@ -19,7 +29,8 @@ namespace HorseSport.Parser.Model.Event {
 			}
 		}
 
-		public Competition() {
+		public Competition(string fileName) {
+			SourceFileName = fileName;
 			Participations = new List<Participation>();
 		}
 

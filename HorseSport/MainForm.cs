@@ -1,4 +1,5 @@
 ﻿using HorseSport.Data;
+using HorseSport.Parser.Core;
 using HorseSport.Parser.Model.Event.Properties;
 using HorseSport.Parser.Model.Living;
 using NLog;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -21,11 +23,12 @@ namespace HorseSport {
 		}
 
 		private void MainForm_Load(object sender, EventArgs e) {
+			openFileDialog.InitialDirectory = Path.Combine(Application.StartupPath, "sources");
 			JudgeManager.LoadData();
 			foreach (var value in JudgeManager.Data.Values) {
-				bindingSource.Add(value);
+				judgeBindingSource.Add(value);
 			}
-			judgeView.DataSource = bindingSource;
+			judgeView.DataSource = judgeBindingSource;
 			logger.Info("Judges data loaded");
 		}
 
@@ -40,7 +43,17 @@ namespace HorseSport {
 
 		private void openToolStripMenuItem_Click(object sender, EventArgs e) {
 			if(openFileDialog.ShowDialog() == DialogResult.OK) {
+				foreach (var fileName in openFileDialog.FileNames) {
+					if (fileName.EndsWith(".xlsx")) {
+						foreach (var competition in GeneralParser.Parse(fileName)) {
+							competitionBindingSource.Add(competition);
+						}
+						competitionGridView.Update();
+					}
+					else if (fileName.EndsWith(".csv")) {
 
+					}
+				}
 			}
 		}
 
