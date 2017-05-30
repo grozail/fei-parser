@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\AppState.cs" />
+    <Compile Include="Data\InfoManager.cs" />
     <Compile Include="Data\JudgeManager.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
