@@ -23,8 +23,10 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
+			this.components = new System.ComponentModel.Container();
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.judgeView = new System.Windows.Forms.DataGridView();
 			this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -36,15 +38,16 @@
 			this.juryNodeMakeButton = new System.Windows.Forms.Button();
 			this.usePrizesCheckBox = new System.Windows.Forms.CheckBox();
 			this.currencyTextBox = new System.Windows.Forms.TextBox();
-			this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.descriptionNodeMakeButton = new System.Windows.Forms.Button();
 			this.descriptionClearButton = new System.Windows.Forms.Button();
 			this.statusStrip = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.menuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.judgeView)).BeginInit();
 			this.statusStrip.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuStrip
@@ -65,6 +68,13 @@
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
 			this.fileToolStripMenuItem.Text = "File";
 			// 
+			// openToolStripMenuItem
+			// 
+			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+			this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+			this.openToolStripMenuItem.Text = "Open";
+			this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+			// 
 			// judgeView
 			// 
 			this.judgeView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -84,6 +94,7 @@
 			// Column1
 			// 
 			this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.Column1.DataPropertyName = "FEIID";
 			this.Column1.HeaderText = "FEIID";
 			this.Column1.Name = "Column1";
 			this.Column1.Width = 59;
@@ -91,6 +102,7 @@
 			// Column2
 			// 
 			this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.Column2.DataPropertyName = "FamilyName";
 			this.Column2.HeaderText = "Family Name";
 			this.Column2.Name = "Column2";
 			this.Column2.Width = 92;
@@ -98,6 +110,7 @@
 			// Column3
 			// 
 			this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.Column3.DataPropertyName = "FirstName";
 			this.Column3.HeaderText = "First Name";
 			this.Column3.Name = "Column3";
 			this.Column3.Width = 82;
@@ -105,6 +118,7 @@
 			// Column4
 			// 
 			this.Column4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.Column4.DataPropertyName = "NF";
 			this.Column4.HeaderText = "NF";
 			this.Column4.Name = "Column4";
 			this.Column4.Width = 46;
@@ -112,6 +126,7 @@
 			// Column5
 			// 
 			this.Column5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.Column5.DataPropertyName = "OfficialStatus";
 			this.Column5.HeaderText = "Official Status";
 			this.Column5.Name = "Column5";
 			this.Column5.Width = 97;
@@ -119,6 +134,7 @@
 			// Column6
 			// 
 			this.Column6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.Column6.DataPropertyName = "Position";
 			this.Column6.HeaderText = "Position";
 			this.Column6.Name = "Column6";
 			this.Column6.Width = 69;
@@ -156,13 +172,6 @@
 			this.currencyTextBox.Size = new System.Drawing.Size(100, 20);
 			this.currencyTextBox.TabIndex = 5;
 			this.currencyTextBox.Visible = false;
-			// 
-			// openToolStripMenuItem
-			// 
-			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-			this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.openToolStripMenuItem.Text = "Open";
-			this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
 			// 
 			// openFileDialog
 			// 
@@ -225,6 +234,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.judgeView)).EndInit();
 			this.statusStrip.ResumeLayout(false);
 			this.statusStrip.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -250,6 +260,7 @@
 		private System.Windows.Forms.Button descriptionClearButton;
 		private System.Windows.Forms.StatusStrip statusStrip;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
+		private System.Windows.Forms.BindingSource bindingSource;
 	}
 }
 
