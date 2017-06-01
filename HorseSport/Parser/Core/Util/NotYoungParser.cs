@@ -1,6 +1,7 @@
 ﻿using ClosedXML.Excel;
 using HorseSport.Parser.Model.Event;
 using HorseSport.Parser.Model.Event.Properties;
+using HorseSport.Parser.Model.Mark.Container;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,6 @@ namespace HorseSport.Parser.Core.Util {
 					++currentPosition;
 				});
 			}
-		}
+		}	 
 	}
 }

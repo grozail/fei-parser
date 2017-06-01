@@ -9,10 +9,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using NLog;
 
 namespace HorseSport.Parser.Core.Specific {
 	abstract class UsualParser : NotYoungParser {
 
+		private static Logger logger = LogManager.GetCurrentClassLogger();
 		public static Competition Parse(XLWorkbook workbook, string fileName) {
 			var competition = new Competition(fileName);
 			ExtractStartInfo<UsualParticipation>(workbook.Worksheet("Start List (2)"));
@@ -49,7 +51,16 @@ namespace HorseSport.Parser.Core.Specific {
 							using (var colRows = sheet.RowsUsed(r => r.RowNumber() >= upperBound && r.Cell(NUMBER_COL).Value.GetType() == typeof(double))) {
 								ExtractCollectiveMarks(colRows, participation, markCols, posScore);
 							}
-							//FUCK MICROSOFT, JUST FUCK IT FOR NEXT CODE
+							var mistakesPercentRow = sheet.RowsUsed(r => r.Cell(COEF_COL).GetString().Trim(trimChars).Equals("%")).First();
+							var mistakesPtsRow = mistakesPercentRow.RowBelow();
+							markCols.ForEach(e => {
+								if(mistakesPercentRow.Cell(e.Key).GetString().Trim(trimChars).Length > 0 ||
+									mistakesPtsRow.Cell(e.Key).GetString().Trim(trimChars).Length > 0) {
+									logger.Warn("\nMISTAKES FOUND, CHECK RESULTS MANUALLY\nATHLETE: {0}\nHORSE: {1}\nCELLS:{3}, {4}",
+										participation.Athlete.FamilyName, participation.Horse.FEIID, mistakesPercentRow.Cell(e.Key).Address, mistakesPtsRow.Cell(e.Key).Address);
+								}
+							});
+							
 							ExtractUsualResults(posScore, participation);
 						}
 					}
@@ -73,10 +84,17 @@ namespace HorseSport.Parser.Core.Specific {
 				Dictionary<string, double> posScore) {
 			exRows.ForEach(r => {
 				var ex = new Exercise(r.Cell(NUMBER_COL).GetString().Trim(trimChars));
-				markCols.ForEach(e => {
-					double score = r.Cell(e.Key).GetDouble() * r.Cell(COEF_COL).GetValue<int>();
-					ex.Marks.Add(new Mark(e.Value, string.Format(nfi, "{0:0.0}", score)));
-					posScore[e.Value] += score;
+				markCols.ForEach(entry => {
+					double score = 0;
+					try {
+						score = r.Cell(entry.Key).GetDouble() * r.Cell(COEF_COL).GetDouble();
+					}
+					catch (Exception e) {
+						logger.Warn(e, "\nATHLETE: {0}\nHORSE: {1}\nCELLS:{3}, {4}", 
+							participation.Athlete.FamilyName, participation.Horse.FEIID, r.Cell(entry.Key).Address, r.Cell(COEF_COL).Address);
+					}
+					ex.Marks.Add(new Mark(entry.Value, string.Format(nfi, "{0:0.0}", score)));
+					posScore[entry.Value] += score;
 				});
 				participation.Exercises.Add(ex);
 			});
@@ -89,10 +107,17 @@ namespace HorseSport.Parser.Core.Specific {
 				Dictionary<string, double> posScore) {
 			colRows.ForEach(r => {
 				var cm = new CollectiveMark(r.Cell(NUMBER_COL).GetString().Trim(trimChars));
-				markCols.ForEach(e => {
-					double score = r.Cell(e.Key).GetDouble() * r.Cell(COEF_COL).GetValue<int>();
-					cm.Marks.Add(new Mark(e.Value, string.Format(nfi, "{0:0.0}", score)));
-					posScore[e.Value] += score;
+				markCols.ForEach(entry => {
+					double score = 0;
+					try {
+						score = r.Cell(entry.Key).GetDouble() * r.Cell(COEF_COL).GetDouble();
+					}
+					catch (Exception e) {
+						logger.Warn(e, "\nATHLETE: {0}\nHORSE: {1}\nCELLS:{3}, {4}",
+							participation.Athlete.FamilyName, participation.Horse.FEIID, r.Cell(entry.Key).Address, r.Cell(COEF_COL).Address);
+					}
+					cm.Marks.Add(new Mark(entry.Value, string.Format(nfi, "{0:0.0}", score)));
+					posScore[entry.Value] += score;
 				});
 				participation.CollectiveMarks.Add(cm);
 			});
