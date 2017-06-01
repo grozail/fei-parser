@@ -51,20 +51,26 @@ namespace HorseSport.Parser.Core.Specific {
 							using (var colRows = sheet.RowsUsed(r => r.RowNumber() >= upperBound && r.Cell(NUMBER_COL).Value.GetType() == typeof(double))) {
 								ExtractCollectiveMarks(colRows, participation, markCols, posScore);
 							}
-							var mistakesPercentRow = sheet.RowsUsed(r => r.Cell(COEF_COL).GetString().Trim(trimChars).Equals("%")).First();
-							var mistakesPtsRow = mistakesPercentRow.RowBelow();
-							markCols.ForEach(e => {
-								if(mistakesPercentRow.Cell(e.Key).GetString().Trim(trimChars).Length > 0 ||
-									mistakesPtsRow.Cell(e.Key).GetString().Trim(trimChars).Length > 0) {
-									logger.Warn("\nMISTAKES FOUND, CHECK RESULTS MANUALLY\nATHLETE: {0}\nHORSE: {1}\nCELLS:{3}, {4}",
-										participation.Athlete.FamilyName, participation.Horse.FEIID, mistakesPercentRow.Cell(e.Key).Address, mistakesPtsRow.Cell(e.Key).Address);
-								}
-							});
+
+							ExamineMistakes(sheet, participation, markCols);
+							
 							
 							ExtractUsualResults(posScore, participation);
 						}
 					}
 				});
+			});
+		}
+
+		private static void ExamineMistakes(IXLWorksheet sheet, UsualParticipation participation, Dictionary<string, string> markCols) {
+			var mistakesPercentRow = sheet.RowsUsed(r => r.Cell(COEF_COL).GetString().Trim(trimChars).Equals("%")).First();
+			var mistakesPtsRow = mistakesPercentRow.RowBelow();
+			markCols.ForEach(e => {
+				if (mistakesPercentRow.Cell(e.Key).GetString().Trim(trimChars).Length > 0 ||
+					mistakesPtsRow.Cell(e.Key).GetString().Trim(trimChars).Length > 0) {
+					logger.Warn("\nMISTAKES FOUND, CHECK RESULTS MANUALLY\nATHLETE: {0}\nHORSE: {1}\nCELLS:{3}, {4}",
+						participation.Athlete.FamilyName, participation.Horse.FEIID, mistakesPercentRow.Cell(e.Key).Address, mistakesPtsRow.Cell(e.Key).Address);
+				}
 			});
 		}
 
