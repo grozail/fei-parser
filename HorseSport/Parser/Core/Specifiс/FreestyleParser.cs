@@ -9,9 +9,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using NLog;
 
 namespace HorseSport.Parser.Core.Specific {
 	abstract class FreestyleParser : NotYoungParser {
+		private static Logger logger = LogManager.GetCurrentClassLogger();
 		public static Competition Parse(XLWorkbook workbook, string fileName) {
 			var competition = new Competition(fileName);
 			ExtractStartInfo<FreestyleParticipation>(workbook.Worksheet("Start List (2)"));
@@ -42,10 +44,10 @@ namespace HorseSport.Parser.Core.Specific {
 							Dictionary<string, double> posTechnicalScore = new Dictionary<string, double>();
 							Dictionary<string, double> posArtisticScore = new Dictionary<string, double>();
 							markCols.ForEach(e => { posTechnicalScore.Add(e.Value, 0); posArtisticScore.Add(e.Value, 0); });
-							var techMistRow = sheet.RowsUsed(r => r.Cell("C").GetString().Trim(trimChars).ToLower().Contains("(number of mistakes)")).First();
-							int upperBound = techMistRow.RowNumber();
-							var timePenaltyRow = sheet.RowsUsed(r => r.Cell("C").GetString().Trim(trimChars).ToLower().Contains("time penalty")).First();
-							int lowerBound = timePenaltyRow.RowNumber();
+							var mistakesTechRow = sheet.RowsUsed(r => r.Cell("C").GetString().Trim(trimChars).ToLower().Contains("(number of mistakes)")).First();
+							int upperBound = mistakesTechRow.RowNumber();
+							var mistakesTimeRow = sheet.RowsUsed(r => r.Cell("C").GetString().Trim(trimChars).ToLower().Contains("time penalty")).First();
+							int lowerBound = mistakesTimeRow.RowNumber();
 							int currentMark = 1;
 							using (var techRows = sheet.RowsUsed(r => r.RowNumber() > 9 && r.RowNumber() < upperBound)) {
 								ExtractTechnicalMarks(techRows, participation, markCols, posTechnicalScore, ref currentMark);
@@ -53,7 +55,9 @@ namespace HorseSport.Parser.Core.Specific {
 							using (var artRows = sheet.RowsUsed(r => r.RowNumber() > upperBound && r.RowNumber() < lowerBound)) {
 								ExtractArtisticMarks(artRows, participation, markCols, posArtisticScore, ref currentMark);
 							}
-							// FUCK MICROSOFT AGAIN
+
+							ExamineMistakes(mistakesTechRow, mistakesTimeRow, participation, markCols, logger);
+
 							ExtractFreestyleResults(markCols, participation, posArtisticScore, posTechnicalScore);
 						}
 					}
@@ -88,10 +92,10 @@ namespace HorseSport.Parser.Core.Specific {
 			int number = currentMark;
 			artRows.ForEach(r => {
 				var am = new ArtisticMark(number.ToString());
-				markCols.ForEach(e => {
-					double score = r.Cell(e.Key).GetDouble() * r.Cell(COEF_COL).GetValue<int>();
-					am.Marks.Add(new Mark(e.Value, string.Format(nfi, "{0:0.0}", score)));
-					posArtisticScore[e.Value] += score;
+				markCols.ForEach(entry => {
+					double score = TryGetScore(r, entry, participation, logger);
+					am.Marks.Add(new Mark(entry.Value, string.Format(nfi, "{0:0.0}", score)));
+					posArtisticScore[entry.Value] += score;
 				});
 				participation.ArtisticMarks.Add(am);
 				++number;
@@ -107,10 +111,10 @@ namespace HorseSport.Parser.Core.Specific {
 			int number = currentMark;
 			techRows.ForEach(r => {
 				var tm = new TechnicalMark(number.ToString());
-				markCols.ForEach(e => {
-					double score = r.Cell(e.Key).GetDouble() * r.Cell(COEF_COL).GetValue<int>();
-					tm.Marks.Add(new Mark(e.Value, string.Format(nfi, "{0:0.0}", score)));
-					posTechnicalScore[e.Value] += score;
+				markCols.ForEach(entry => {
+					double score = TryGetScore(r, entry, participation, logger);
+					tm.Marks.Add(new Mark(entry.Value, string.Format(nfi, "{0:0.0}", score)));
+					posTechnicalScore[entry.Value] += score;
 				});
 				participation.TechnicalMarks.Add(tm);
 				++number;

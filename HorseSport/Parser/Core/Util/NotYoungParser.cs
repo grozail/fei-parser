@@ -1,6 +1,7 @@
 ﻿using ClosedXML.Excel;
 using HorseSport.Parser.Model.Event;
 using HorseSport.Parser.Model.Event.Properties;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,28 @@ namespace HorseSport.Parser.Core.Util {
 					++currentPosition;
 				});
 			}
+		}
+
+		protected static double TryGetScore(IXLRow r, KeyValuePair<string, string> entry, Participation participation, Logger logger) {
+			double score = 0;
+			try {
+				score = r.Cell(entry.Key).GetDouble() * r.Cell(COEF_COL).GetDouble();
+			}
+			catch (Exception e) {
+				logger.Warn(e, "\nATHLETE: {0}\nHORSE: {1}\nCELLS:{3}, {4}",
+					participation.Athlete.FamilyName, participation.Horse.FEIID, r.Cell(entry.Key).Address, r.Cell(COEF_COL).Address);
+			}
+			return score;
+		}
+
+		protected static void ExamineMistakes(IXLRow r1, IXLRow r2, Participation participation, Dictionary<string, string> markCols, Logger logger) {
+			markCols.ForEach(e => {
+				if (r1.Cell(e.Key).GetString().Trim(trimChars).Length > 0 ||
+					r2.Cell(e.Key).GetString().Trim(trimChars).Length > 0) {
+					logger.Warn("\nMISTAKES FOUND, CHECK RESULTS MANUALLY\nATHLETE: {0}\nHORSE: {1}\nCELLS:{3}, {4}",
+						participation.Athlete.FamilyName, participation.Horse.FEIID, r1.Cell(e.Key).Address, r2.Cell(e.Key).Address);
+				}
+			});
 		}
 	}
 }
