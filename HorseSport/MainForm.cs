@@ -91,6 +91,7 @@ namespace HorseSport {
 			}
 		}
 
+		//TODO make better logic and try remove hardcode
 		private void makeDocumentButton_Click(object sender, EventArgs e) {
 			var iRows = infoGridView.SelectedRows;
 			if (iRows.Count == 1) {

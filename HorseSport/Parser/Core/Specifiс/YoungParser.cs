@@ -53,6 +53,8 @@ namespace HorseSport.Parser.Core.Specific {
 		private static string THIRD_ASSESSMENT_COL = "L";
 		private static string FOURTH_ASSESSMENT_COL = "M";
 		private static string FIFTH_ASSESSMENT_COL = "N";
+
+		//TODO remove hardcode
 		private static List<Assessment> ExtractAssessments(IXLRow row) {
 			var assessments = new List<Assessment>();
 

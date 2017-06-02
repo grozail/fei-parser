@@ -19,6 +19,7 @@ namespace HorseSport.Data {
 			}
 		}
 
+		//TODO remove hardcode
 		public static void LoadData(string fileName) {
 			Data = new List<EventInfo>();
 			using (StreamReader reader = new StreamReader(fileName)) {
@@ -38,6 +39,7 @@ namespace HorseSport.Data {
 					ei.VenueName = (string)it.Current;
 					it.MoveNext();
 					ei.VenueName += ", " + (string)it.Current;
+					ei.VenueName = ei.VenueName.Trim(' ', '"');
 					it.MoveNext();
 					ei.VenueCountry = (string)it.Current;
 					it.MoveNext();
