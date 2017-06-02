@@ -12,7 +12,7 @@ using System.Text.RegularExpressions;
 namespace HorseSport.Parser.Core.Util {
 	abstract class AbstractParser {
 		protected static string PIVOT_COL = "A";
-
+		
 		protected static char[] trimChars = {' ', '\r', '\n'};
 		protected static Regex firstName = Globals.INSTANCE.AthleteFirstNameRegex;
 		protected static Regex familyName = Globals.INSTANCE.AthleteFamilyNameRegex;

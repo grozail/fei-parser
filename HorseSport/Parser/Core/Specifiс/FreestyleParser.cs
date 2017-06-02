@@ -44,10 +44,10 @@ namespace HorseSport.Parser.Core.Specific {
 							Dictionary<string, double> posTechnicalScore = new Dictionary<string, double>();
 							Dictionary<string, double> posArtisticScore = new Dictionary<string, double>();
 							markCols.ForEach(e => { posTechnicalScore.Add(e.Value, 0); posArtisticScore.Add(e.Value, 0); });
-							var techMistRow = sheet.RowsUsed(r => r.Cell("C").GetString().Trim(trimChars).ToLower().Contains("(number of mistakes)")).First();
-							int upperBound = techMistRow.RowNumber();
-							var timePenaltyRow = sheet.RowsUsed(r => r.Cell("C").GetString().Trim(trimChars).ToLower().Contains("time penalty")).First();
-							int lowerBound = timePenaltyRow.RowNumber();
+							var mistakesTechRow = sheet.RowsUsed(r => r.Cell("C").GetString().Trim(trimChars).ToLower().Contains("(number of mistakes)")).First();
+							int upperBound = mistakesTechRow.RowNumber();
+							var mistakesTimeRow = sheet.RowsUsed(r => r.Cell("C").GetString().Trim(trimChars).ToLower().Contains("time penalty")).First();
+							int lowerBound = mistakesTimeRow.RowNumber();
 							int currentMark = 1;
 							using (var techRows = sheet.RowsUsed(r => r.RowNumber() > 9 && r.RowNumber() < upperBound)) {
 								ExtractTechnicalMarks(techRows, participation, markCols, posTechnicalScore, ref currentMark);
@@ -55,6 +55,9 @@ namespace HorseSport.Parser.Core.Specific {
 							using (var artRows = sheet.RowsUsed(r => r.RowNumber() > upperBound && r.RowNumber() < lowerBound)) {
 								ExtractArtisticMarks(artRows, participation, markCols, posArtisticScore, ref currentMark);
 							}
+
+							ExamineMistakes(mistakesTechRow, mistakesTimeRow, participation, markCols, logger);
+
 							ExtractFreestyleResults(markCols, participation, posArtisticScore, posTechnicalScore);
 						}
 					}

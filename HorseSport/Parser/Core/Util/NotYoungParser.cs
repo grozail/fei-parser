@@ -53,5 +53,15 @@ namespace HorseSport.Parser.Core.Util {
 			}
 			return score;
 		}
+
+		protected static void ExamineMistakes(IXLRow r1, IXLRow r2, Participation participation, Dictionary<string, string> markCols, Logger logger) {
+			markCols.ForEach(e => {
+				if (r1.Cell(e.Key).GetString().Trim(trimChars).Length > 0 ||
+					r2.Cell(e.Key).GetString().Trim(trimChars).Length > 0) {
+					logger.Warn("\nMISTAKES FOUND, CHECK RESULTS MANUALLY\nATHLETE: {0}\nHORSE: {1}\nCELLS:{3}, {4}",
+						participation.Athlete.FamilyName, participation.Horse.FEIID, r1.Cell(e.Key).Address, r2.Cell(e.Key).Address);
+				}
+			});
+		}
 	}
 }
