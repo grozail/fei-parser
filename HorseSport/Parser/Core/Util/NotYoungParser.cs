@@ -1,6 +1,7 @@
 ﻿using ClosedXML.Excel;
 using HorseSport.Parser.Model.Event;
 using HorseSport.Parser.Model.Event.Properties;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,18 @@ namespace HorseSport.Parser.Core.Util {
 					++currentPosition;
 				});
 			}
+		}
+
+		protected static double TryGetScore(IXLRow r, KeyValuePair<string, string> entry, Participation participation, Logger logger) {
+			double score = 0;
+			try {
+				score = r.Cell(entry.Key).GetDouble() * r.Cell(COEF_COL).GetDouble();
+			}
+			catch (Exception e) {
+				logger.Warn(e, "\nATHLETE: {0}\nHORSE: {1}\nCELLS:{3}, {4}",
+					participation.Athlete.FamilyName, participation.Horse.FEIID, r.Cell(entry.Key).Address, r.Cell(COEF_COL).Address);
+			}
+			return score;
 		}
 	}
 }

@@ -9,9 +9,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using NLog;
 
 namespace HorseSport.Parser.Core.Specific {
 	abstract class FreestyleParser : NotYoungParser {
+		private static Logger logger = LogManager.GetCurrentClassLogger();
 		public static Competition Parse(XLWorkbook workbook, string fileName) {
 			var competition = new Competition(fileName);
 			ExtractStartInfo<FreestyleParticipation>(workbook.Worksheet("Start List (2)"));
@@ -53,7 +55,6 @@ namespace HorseSport.Parser.Core.Specific {
 							using (var artRows = sheet.RowsUsed(r => r.RowNumber() > upperBound && r.RowNumber() < lowerBound)) {
 								ExtractArtisticMarks(artRows, participation, markCols, posArtisticScore, ref currentMark);
 							}
-							// FUCK MICROSOFT AGAIN
 							ExtractFreestyleResults(markCols, participation, posArtisticScore, posTechnicalScore);
 						}
 					}
@@ -88,10 +89,10 @@ namespace HorseSport.Parser.Core.Specific {
 			int number = currentMark;
 			artRows.ForEach(r => {
 				var am = new ArtisticMark(number.ToString());
-				markCols.ForEach(e => {
-					double score = r.Cell(e.Key).GetDouble() * r.Cell(COEF_COL).GetValue<int>();
-					am.Marks.Add(new Mark(e.Value, string.Format(nfi, "{0:0.0}", score)));
-					posArtisticScore[e.Value] += score;
+				markCols.ForEach(entry => {
+					double score = TryGetScore(r, entry, participation, logger);
+					am.Marks.Add(new Mark(entry.Value, string.Format(nfi, "{0:0.0}", score)));
+					posArtisticScore[entry.Value] += score;
 				});
 				participation.ArtisticMarks.Add(am);
 				++number;
@@ -107,10 +108,10 @@ namespace HorseSport.Parser.Core.Specific {
 			int number = currentMark;
 			techRows.ForEach(r => {
 				var tm = new TechnicalMark(number.ToString());
-				markCols.ForEach(e => {
-					double score = r.Cell(e.Key).GetDouble() * r.Cell(COEF_COL).GetValue<int>();
-					tm.Marks.Add(new Mark(e.Value, string.Format(nfi, "{0:0.0}", score)));
-					posTechnicalScore[e.Value] += score;
+				markCols.ForEach(entry => {
+					double score = TryGetScore(r, entry, participation, logger);
+					tm.Marks.Add(new Mark(entry.Value, string.Format(nfi, "{0:0.0}", score)));
+					posTechnicalScore[entry.Value] += score;
 				});
 				participation.TechnicalMarks.Add(tm);
 				++number;
